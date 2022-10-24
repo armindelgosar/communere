@@ -1,0 +1,12 @@
+/.idea/*
+*.pyc
+.envs
+.env
+
+/venv/
+.venv
+
+
+postgres_data/
+
+docker-com*
