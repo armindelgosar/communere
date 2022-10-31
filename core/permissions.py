@@ -39,12 +39,12 @@ class IsProjectMember(permissions.BasePermission):
     def has_permission(self, request, view):
         try:
             developer = get_account.get_developer(request.user)
-            task_id = view.kwargs.get('task_id')
-            task = repository.get_task_by_id(task_id=task_id)
+            project_id = view.kwargs.get('project_id')
+            project = repository.get_project_by_id(project_id=project_id)
 
-            if task.project.developers.filter(id=developer.id).exists():
+            if project.developers.filter(id=developer.id).exists():
                 return True
             raise exceptions.AccountIsNotProjectDeveloperError(
-                f'Developer with ID: {developer.id} is not member of project with ID: {task.project_id}')
+                f'Developer with ID: {developer.id} is not member of project with ID: {project_id}')
         except:
             return False

@@ -6,7 +6,7 @@ from to_do.models import Project
 
 
 class ProjectCreateUpdateSerializer(serializers.ModelSerializer):
-    developer_ids = serializers.ListSerializer(write_only=True)
+    developer_ids = serializers.ListSerializer(write_only=True, child=serializers.IntegerField())
 
     class Meta:
         model = Project
@@ -45,10 +45,12 @@ class ProjectListRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = (
+            'id',
             'project_name',
             'developers',
         )
         read_only_fields = (
+            'id',
             'project_name',
             'developers',
         )

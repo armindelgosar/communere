@@ -84,7 +84,7 @@ class BaseAccount(BaseModel, AbstractBaseUser, PermissionsMixin):
     @property
     def user_type(self):
         user_type = None
-        if hasattr(self, 'product_manager'):
+        if hasattr(self, 'productmanager'):
             user_type = 'product_manager'
         elif hasattr(self, 'developer'):
             user_type = 'developer'

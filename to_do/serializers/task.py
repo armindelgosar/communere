@@ -8,7 +8,7 @@ from to_do.models import Task
 
 
 class TaskCreateUpdateSerializer(serializers.ModelSerializer):
-    developer_ids = serializers.ListSerializer(write_only=True)
+    developer_ids = serializers.ListSerializer(write_only=True, child=serializers.IntegerField())
 
     class Meta:
         model = Task
@@ -19,13 +19,15 @@ class TaskCreateUpdateSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, attrs):
-        project_id = attrs.get('project')
+        project = attrs.get('project')
         developer_ids = attrs.get('developer_ids', [])
 
-        if ids := repository.get_developers_who_are_not_member_of_project(project_id, developer_ids):
+        if ids := repository.get_developers_who_are_not_member_of_project(project.id, developer_ids):
             raise ValidationError(
                 f'You can only assign project developers to its tasks! These members are not in project: {str(ids)}'
             )
+
+        return attrs
 
     def create(self, validated_data):
         with transaction.atomic():
@@ -56,10 +58,12 @@ class TaskListRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = (
+            'id',
             'title',
             'developers',
         )
         read_only_fields = (
+            'id',
             'title',
             'developers',
         )

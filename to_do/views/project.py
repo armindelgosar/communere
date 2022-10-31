@@ -16,7 +16,7 @@ class ProjectViewSet(ModelViewSet):
 
     def get_queryset(self):
         project_manager = get_product_manager(self.request.user)
-        return core_repository.get_product_manager_all_projects(project_manager.id).select_related(
+        return core_repository.get_product_manager_all_projects(project_manager.id).prefetch_related(
             'developers',
             'developers__account',
         )
