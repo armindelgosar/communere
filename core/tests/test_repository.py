@@ -6,6 +6,7 @@ from to_do.tests import model_factories
 
 class TestRepository(test.TestCase):
     def setUp(self) -> None:
+        self.project = model_factories.ProjectFactory(id=1)
         self.developers = model_factories.DeveloperFactory.create_batch(3)
 
         self.project.developers.set(self.developers)
