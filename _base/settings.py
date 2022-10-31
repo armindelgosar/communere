@@ -18,6 +18,8 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "_base.settings")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -40,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'to_do',
+    'core.apps.CoreConfig',
+    'to_do.apps.ToDoConfig',
 ]
 
 MIDDLEWARE = [
